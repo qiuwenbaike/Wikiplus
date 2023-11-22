@@ -1,6 +1,3 @@
-import zh from "../../languages/zh-cn.json";
-import en from "../../languages/en-us.json";
-
 class I18n {
     language;
     i18nData = {};
@@ -10,21 +7,18 @@ class I18n {
         try {
             language =
                 JSON.parse(localStorage.Wikiplus_Settings)["language"] ||
-                window.navigator.language.toLowerCase();
+                navigator.language.toLowerCase();
         } catch (e) {
-            language = window.navigator.language.toLowerCase();
+            language = (navigator.language || navigator.browserLanguage)
+                .replace(/han[st]-?/i, "") // for languages like zh-Hans-CN
+                .toLowerCase();
         }
         this.language = language;
-        // Preload 2 languages
-        this.i18nData["zh-cn"] = zh;
-        this.i18nData["en-us"] = en;
         // Merge with localStorage i18n cache
         try {
             let i18nCache = JSON.parse(localStorage.getItem("Wikiplus_i18nCache"));
             for (const key of Object.keys(i18nCache)) {
-                if (key !== "zh-cn" && key !== "en-us") {
-                    this.i18nData[key] = i18nCache[key];
-                }
+                this.i18nData[key] = i18nCache[key];
             }
         } catch (e) {
             // Fail to parse i18n cache, reset
@@ -64,7 +58,9 @@ class I18n {
         }
         try {
             const response = await (
-                await fetch(`https://wikiplus-app.com/languages/get.php?lang=${language}`)
+                await fetch(
+                    `https://git.qiuwen.net.cn/InterfaceAdmin/Wikiplus/raw/branch/dev/languages/${language}`
+                )
             ).json();
             const nowVersion = localStorage.getItem("Wikiplus_LanguageVersion") || "000";
             this.sessionUpdateLog.push(language);
