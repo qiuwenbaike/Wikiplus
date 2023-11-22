@@ -18,8 +18,13 @@ module.exports = {
                             [
                                 "@babel/preset-env",
                                 {
+                                    bugfixes: true,
+                                    corejs: {
+                                        version: "3.33",
+                                        proposals: true,
+                                    },
+                                    modules: false,
                                     useBuiltIns: "usage",
-                                    corejs: "3",
                                 },
                             ],
                         ],
