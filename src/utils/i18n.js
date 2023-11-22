@@ -59,7 +59,7 @@ class I18n {
         try {
             const response = await (
                 await fetch(
-                    `https://git.qiuwen.net.cn/InterfaceAdmin/Wikiplus/raw/branch/dev/languages/${language}`
+                    `https://gitcdn.qiuwen.net.cn/InterfaceAdmin/Wikiplus/raw/branch/dev/languages/${language}`
                 )
             ).json();
             const nowVersion = localStorage.getItem("Wikiplus_LanguageVersion") || "000";
