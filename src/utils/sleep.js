@@ -1,2 +1,6 @@
-const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+const sleep = (time) => {
+    return new Promise((resolve) => {
+        return setTimeout(resolve, time);
+    });
+};
 export default sleep;

@@ -7,24 +7,24 @@ class WikiplusError extends Error {
     }
 }
 
-class Log {
-    static debug(message = "") {
+const Log = {
+    debug(message = "") {
         console.debug(`[Wikiplus-DEBUG] ${message}`);
-    }
-    static info(message = "") {
+    },
+    info(message = "") {
         console.info(`[Wikiplus-INFO] ${message}`);
-    }
-    static error(errorCode, payloads = []) {
+    },
+    error(errorCode, payloads = []) {
         let template = i18n.translate(errorCode);
         if (payloads.length > 0) {
             // Fill
-            payloads.forEach((v, i) => {
+            for (const [i, v] of payloads.entries()) {
                 template = template.replace(new RegExp(`\\${i + 1}`, "ig"), v);
-            });
+            }
         }
         console.error(`[Wikiplus-ERROR] ${template}`);
         throw new WikiplusError(`${template}`, errorCode);
-    }
-}
+    },
+};
 
 export default Log;

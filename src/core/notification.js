@@ -9,8 +9,8 @@ class Notification {
         $("#MoeNotification").append(
             $("<div>")
                 .addClass("MoeNotification-notice")
-                .addClass("MoeNotification-notice-" + type)
-                .append("<span>" + text + "</span>")
+                .addClass(`MoeNotification-notice-${type}`)
+                .append(`<span>${text}</span>`)
         );
         $("#MoeNotification").find(".MoeNotification-notice").last().fadeIn(300);
         this.bind();
@@ -47,7 +47,7 @@ class Notification {
         $(".MoeNotification-notice").each(function (i) {
             if (typeof f === "function") {
                 const ele = $(this);
-                setTimeout(function () {
+                setTimeout(() => {
                     f(ele);
                 }, 200 * i);
             } else {

@@ -11,6 +11,7 @@ class UI {
 
     /**
      * 创建居中对话框
+     *
      * @param {string} title 窗口标题
      * @param {string | JQuery<HTMLElement>} content 内容
      * @param {*} width 宽度
@@ -41,24 +42,24 @@ class UI {
             $(this)
                 .parent()
                 .fadeOut("fast", function () {
-                    window.onclose = window.onbeforeunload = undefined; // 取消页面关闭确认
+                    window.addEventListener("close", (window.onbeforeunload = undefined)); // 取消页面关闭确认
                     $(this).remove();
                 });
         });
         //拖曳
         const bindDragging = function (element) {
-            element.mousedown(function (e) {
-                var baseX = e.clientX;
-                var baseY = e.clientY;
-                var baseOffsetX = element.parent().offset().left;
-                var baseOffsetY = element.parent().offset().top;
-                $(document).on("mousemove", function (e) {
+            element.mousedown((e) => {
+                const baseX = e.clientX;
+                const baseY = e.clientY;
+                const baseOffsetX = element.parent().offset().left;
+                const baseOffsetY = element.parent().offset().top;
+                $(document).on("mousemove", (e) => {
                     element.parent().css({
                         "margin-left": baseOffsetX + e.clientX - baseX,
                         top: baseOffsetY + e.clientY - baseY,
                     });
                 });
-                $(document).on("mouseup", function () {
+                $(document).on("mouseup", () => {
                     element.unbind("mousedown");
                     $(document).off("mousemove");
                     $(document).off("mouseup");
@@ -75,6 +76,7 @@ class UI {
     /**
      * 在搜索框左侧「更多」菜单内添加按钮
      * Add a button in "More" menu (left of the search bar)
+     *
      * @param {string} text 按钮名 Button text
      * @param {string} id 按钮id Button id
      * @return {JQuery<HTMLElement>} button
@@ -82,7 +84,7 @@ class UI {
     addFunctionButton(text, id) {
         let button;
         switch (Constants.skin) {
-            case "minerva": {
+            case "minerva":
                 button = $("<li>")
                     .attr("id", id)
                     .addClass("toggle-list-item")
@@ -97,21 +99,20 @@ class UI {
                             )
                     );
                 break;
-            }
-            case "moeskin": {
+
+            case "moeskin":
                 button = $("<li>")
                     .addClass("Wikiplus-More-Function-Button")
                     .attr("id", id)
                     .append($("<a>").attr("href", "javascript:void(0);").text(text));
                 break;
-            }
-            default: {
+
+            default:
                 button = $("<li>")
                     .addClass("mw-list-item")
                     .addClass("vector-tab-noicon")
                     .attr("id", id)
                     .append($("<a>").attr("href", "javascript:void(0);").text(text));
-            }
         }
         if (Constants.skin === "minerva" && $("#p-tb").length > 0) {
             $("#p-tb").append(button);
@@ -122,13 +123,13 @@ class UI {
         } else if ($("#p-cactions").length > 0) {
             $("#p-cactions ul").append(button);
             return $(`#${id}`);
-        } else {
-            Log.info(i18n.translate("cant_add_funcbtn"));
         }
+        Log.info(i18n.translate("cant_add_funcbtn"));
     }
 
     /**
      * 插入快速重定向按钮
+     *
      * @param {*} onClick
      */
     insertSimpleRedirectButton(onClick = () => {}) {
@@ -140,6 +141,7 @@ class UI {
 
     /**
      * 插入设置面板按钮
+     *
      * @param {*} onClick
      */
     insertSettingsPanelButton(onClick = () => {}) {
@@ -155,17 +157,17 @@ class UI {
     /**
      * 插入顶部快速编辑按钮
      * Insert QuickEdit button besides page edit button.
+     *
+     * @param onClick
      */
     insertTopQuickEditEntry(onClick) {
-        const topBtn = $("<li>")
-            .attr("id", "Wikiplus-Edit-TopBtn")
-            .attr("class", "mw-list-item");
+        const topBtn = $("<li>").attr("id", "Wikiplus-Edit-TopBtn").attr("class", "mw-list-item");
         const topBtnLink = $("<a>")
             .attr("href", "javascript:void(0)")
             .text(`${i18n.translate("quickedit_topbtn")}`);
         topBtn.append(topBtnLink);
         switch (Constants.skin) {
-            case "minerva": {
+            case "minerva":
                 topBtn.css({ "align-items": "center", display: "flex" });
                 topBtn.find("span").addClass("page-actions-menu__list-item");
                 topBtn
@@ -175,17 +177,16 @@ class UI {
                     )
                     .css("vertical-align", "middle");
                 break;
-            }
-            case "vector-2022": {
+
+            case "vector-2022":
                 topBtn.addClass("vector-tab-noicon");
                 break;
-            }
-            case "vector": {
+
+            case "vector":
                 topBtn.append($("<span>").append(topBtnLink));
                 break;
-            }
-            default: {
-            }
+
+            default:
         }
         $(topBtn).on("click", () => {
             onClick({
@@ -203,6 +204,8 @@ class UI {
     /**
      * 插入段落快速编辑按钮
      * Insert QuickEdit buttons for each section.
+     *
+     * @param onClick
      */
     insertSectionQuickEditEntries(onClick = () => {}) {
         const sectionBtn =
@@ -245,7 +248,7 @@ class UI {
                 Constants.skin === "minerva"
                     ? $(this).append(_sectionBtn)
                     : $(this).find(".mw-editsection-bracket").last().before(_sectionBtn);
-            } catch (e) {
+            } catch {
                 Log.error("fail_to_init_quickedit");
             }
         });
@@ -253,6 +256,7 @@ class UI {
 
     /**
      * 插入任意链接编辑入口
+     *
      * @param {*} onClick
      */
     insertLinkEditEntries(onClick = () => {}) {
@@ -298,9 +302,12 @@ class UI {
         }
         this.quickEditPanelVisible = true;
         // 防止手滑关闭页面
-        window.onclose = window.onbeforeunload = function () {
-            return `${i18n.translate("onclose_confirm")}`;
-        };
+        window.addEventListener(
+            "close",
+            (window.onbeforeunload = function () {
+                return `${i18n.translate("onclose_confirm")}`;
+            })
+        );
         const isNewPage = $(".noarticletext").length > 0;
         // DOM 定义开始
         const backBtn = $("<span>")
@@ -359,23 +366,23 @@ class UI {
                 .text(`${i18n.translate("loading_preview")}`);
             const wikiText = $("#Wikiplus-Quickedit").val();
             $(this).attr("disabled", "disabled");
-            $("#Wikiplus-Quickedit-Preview-Output").fadeOut(100, function () {
+            $("#Wikiplus-Quickedit-Preview-Output").fadeOut(100, () => {
                 $("#Wikiplus-Quickedit-Preview-Output").html("").append(preloadBanner);
                 $("#Wikiplus-Quickedit-Preview-Output").fadeIn(100);
             });
             $("html, body").animate({ scrollTop: self.scrollTop }, 200); //返回顶部
             const result = await onParse(wikiText);
-            $("#Wikiplus-Quickedit-Preview-Output").fadeOut("100", function () {
+            $("#Wikiplus-Quickedit-Preview-Output").fadeOut("100", () => {
                 $("#Wikiplus-Quickedit-Preview-Output").html(
-                    '<hr><div class="mw-body-content">' + result + "</div><hr>"
+                    `<hr><div class="mw-body-content">${result}</div><hr>`
                 );
                 $("#Wikiplus-Quickedit-Preview-Output").fadeIn("100");
                 $("#Wikiplus-Quickedit-Preview-Submit").prop("disabled", false);
             });
         });
         // Edit
-        $("#Wikiplus-Quickedit-Submit").on("click", async function () {
-            const timer = new Date().valueOf();
+        $("#Wikiplus-Quickedit-Submit").on("click", async () => {
+            const timer = Date.now();
             const editBanner = $("<div>")
                 .addClass("Wikiplus-Banner")
                 .text(`${i18n.translate("submitting_edit")}`);
@@ -389,27 +396,27 @@ class UI {
                 "#Wikiplus-Quickedit-Submit,#Wikiplus-Quickedit,#Wikiplus-Quickedit-Preview-Submit"
             ).attr("disabled", "disabled");
             $("html, body").animate({ scrollTop: self.scrollTop }, 200);
-            $("#Wikiplus-Quickedit-Preview-Output").fadeOut(100, function () {
+            $("#Wikiplus-Quickedit-Preview-Output").fadeOut(100, () => {
                 $("#Wikiplus-Quickedit-Preview-Output").html("").append(editBanner);
                 $("#Wikiplus-Quickedit-Preview-Output").fadeIn(100);
             });
             try {
                 await onEdit(payload);
-                const useTime = new Date().valueOf() - timer;
+                const useTime = Date.now() - timer;
                 $("#Wikiplus-Quickedit-Preview-Output")
                     .find(".Wikiplus-Banner")
                     .css("background", "rgba(6, 239, 92, 0.44)");
                 $("#Wikiplus-Quickedit-Preview-Output")
                     .find(".Wikiplus-Banner")
                     .text(`${i18n.translate("edit_success", [useTime.toString()])}`);
-                window.onclose = window.onbeforeunload = undefined; //取消页面关闭确认
-                setTimeout(function () {
+                window.addEventListener("close", (window.onbeforeunload = undefined)); //取消页面关闭确认
+                setTimeout(() => {
                     location.reload();
                 }, 500);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                console.log(error);
                 $(".Wikiplus-Banner").css("background", "rgba(218, 142, 167, 0.65)");
-                $(".Wikiplus-Banner").html(e.message);
+                $(".Wikiplus-Banner").html(error.message);
             } finally {
                 $(
                     "#Wikiplus-Quickedit-Submit,#Wikiplus-Quickedit,#Wikiplus-Quickedit-Preview-Submit"
@@ -419,7 +426,7 @@ class UI {
         //Ctrl+S提交 Ctrl+Shift+S小编辑
         $("#Wikiplus-Quickedit,#Wikiplus-Quickedit-Summary-Input,#Wikiplus-Quickedit-MinorEdit").on(
             "keydown",
-            function (e) {
+            (e) => {
                 if (e.ctrlKey && e.which === 83) {
                     if (e.shiftKey) {
                         $("#Wikiplus-Quickedit-MinorEdit").trigger("click");
@@ -432,9 +439,9 @@ class UI {
         );
         //Esc退出
         if (escExit) {
-            $(document).on("keydown", function (e) {
+            $(document).on("keydown", (e) => {
                 if (e.which === 27) {
-                    $("#Wikiplus-Quickedit-Back").click();
+                    $("#Wikiplus-Quickedit-Back").trigger("click");
                 }
             });
         }
@@ -443,14 +450,17 @@ class UI {
     hideQuickEditPanel() {
         this.quickEditPanelVisible = false;
         $(".Wikiplus-InterBox").fadeOut("fast", function () {
-            window.onclose = window.onbeforeunload = undefined; //取消页面关闭确认
+            window.addEventListener("close", (window.onbeforeunload = undefined)); //取消页面关闭确认
             $(this).remove();
         });
     }
 
     /**
      * 显示快速重定向弹窗
-     * @param {*}
+     *
+     * @param root0
+     * @param root0.onEdit
+     * @param root0.onSuccess
      */
     showSimpleRedirectPanel({ onEdit = () => {}, onSuccess = () => {} } = {}) {
         const input = $("<input>").addClass("Wikiplus-InterBox-Input");
@@ -485,10 +495,10 @@ class UI {
                 $(".Wikiplus-Banner").text(i18n.translate("redirect_saved"));
                 this.hideSimpleRedirectPanel(dialog);
                 onSuccess({ title });
-            } catch (e) {
+            } catch (error) {
                 $(".Wikiplus-Banner").css("background", "rgba(218, 142, 167, 0.65)");
-                $(".Wikiplus-Banner").text(e.message);
-                if (e.code === "articleexists") {
+                $(".Wikiplus-Banner").text(error.message);
+                if (error.code === "articleexists") {
                     $(".Wikiplus-InterBox-Content")
                         .append($("<hr>"))
                         .append(continueBtn)
@@ -510,9 +520,9 @@ class UI {
                             $(".Wikiplus-Banner").text(i18n.translate("redirect_saved"));
                             this.hideSimpleRedirectPanel(dialog);
                             onSuccess({ title });
-                        } catch (e) {
+                        } catch (error) {
                             $(".Wikiplus-Banner").css("background", "rgba(218, 142, 167, 0.65)");
-                            $(".Wikiplus-Banner").text(e.message);
+                            $(".Wikiplus-Banner").text(error.message);
                         }
                     });
                 }
@@ -525,6 +535,7 @@ class UI {
 
     /**
      * 隐藏快速重定向弹窗
+     *
      * @param {*} dialog
      */
     hideSimpleRedirectPanel(dialog = $("body")) {
@@ -551,13 +562,13 @@ class UI {
             i18n.translate("wikiplus_settings_desc"),
             content,
             600,
-            function () {
+            () => {
                 if (localStorage.Wikiplus_Settings) {
                     $("#Wikiplus-Setting-Input").val(localStorage.Wikiplus_Settings);
                     try {
                         const settings = JSON.parse(localStorage.Wikiplus_Settings);
                         $("#Wikiplus-Setting-Input").val(JSON.stringify(settings, null, 2));
-                    } catch (e) {
+                    } catch {
                         // ignore
                     }
                 } else {
@@ -578,7 +589,7 @@ class UI {
                 $(".Wikiplus-InterBox-Content").html("").append(savedBanner);
                 await sleep(1500);
                 this.hideSettingsPanel(dialog);
-            } catch (e) {
+            } catch {
                 Notification.error(i18n.translate("wikiplus_settings_grammar_error"));
             }
         });

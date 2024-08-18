@@ -6,9 +6,9 @@ class I18n {
         let language;
         try {
             language =
-                JSON.parse(localStorage.Wikiplus_Settings)["language"] ||
+                JSON.parse(localStorage["Wikiplus_Settings"])["language"] ||
                 navigator.language.toLowerCase();
-        } catch (e) {
+        } catch {
             language = (navigator.language || navigator.browserLanguage)
                 .replace(/han[st]-?/i, "") // for languages like zh-Hans-CN
                 .toLowerCase();
@@ -16,11 +16,11 @@ class I18n {
         this.language = language;
         // Merge with localStorage i18n cache
         try {
-            let i18nCache = JSON.parse(localStorage.getItem("Wikiplus_i18nCache"));
+            const i18nCache = JSON.parse(localStorage.getItem("Wikiplus_i18nCache"));
             for (const key of Object.keys(i18nCache)) {
                 this.i18nData[key] = i18nCache[key];
             }
-        } catch (e) {
+        } catch {
             // Fail to parse i18n cache, reset
             localStorage.setItem("Wikiplus_i18nCache", "{}");
         }
@@ -45,9 +45,9 @@ class I18n {
         }
 
         if (placeholders.length > 0) {
-            placeholders.forEach((placeholder, index) => {
+            for (const [index, placeholder] of placeholders.entries()) {
                 result = result.replace(`$${index + 1}`, placeholder);
-            });
+            }
         }
         return result;
     }
@@ -71,7 +71,7 @@ class I18n {
                 // Update localStorage cache
                 localStorage.setItem("Wikiplus_i18nCache", JSON.stringify(this.i18nData));
             }
-        } catch (e) {
+        } catch {
             // Unsupported language
         }
     }

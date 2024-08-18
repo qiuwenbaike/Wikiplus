@@ -25,6 +25,7 @@ class Page {
     /**
      * 初始化 获得页面EditToken和初始TimeStamp
      * Initialization.
+     *
      * @param {string} editToken (optional) 如果提供了editToken，将不会再获取
      */
     async init({ editToken = "" } = {}) {
@@ -72,7 +73,8 @@ class Page {
 
     /**
      * 获得 WikiText
-     * @param {object} config
+     *
+     * @param {Object} config
      * @param {string} config.section
      * @param {string} config.revisionId
      */
@@ -92,6 +94,7 @@ class Page {
 
     /**
      * 解析 WikiText
+     *
      * @param {string} wikitext
      */
     async parseWikiText(wikitext) {
@@ -100,7 +103,9 @@ class Page {
 
     /**
      * 编辑页面
+     *
      * @param {*} config
+     * @param payload
      */
     async edit(payload) {
         if (!this.editToken) {

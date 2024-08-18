@@ -1,8 +1,11 @@
 /**
  * 解析URL参数列表
  * Parse URL query.
+ *
  * @param {string}} url
+ * @param url
  */
+
 export function parseQuery(url) {
     const reg = /(([^?&=]+)(?:=([^?&=]*))*)/g;
     const params = {};

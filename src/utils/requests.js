@@ -1,12 +1,12 @@
 import Constants from "../utils/constants";
 
-class Requests {
-    static base = `${location.protocol}//${location.host}${Constants.scriptPath}/api.php`;
-    static async get(query) {
+const Requests = {
+    base: `${location.protocol}//${location.host}${Constants.scriptPath}/api.php`,
+    async get(query) {
         const url = new URL(Requests.base);
-        Object.keys(query).forEach((key) => {
+        for (const key of Object.keys(query)) {
             url.searchParams.append(key, query[key]);
-        });
+        }
         const response = await fetch(url, {
             credentials: "same-origin",
             headers: {
@@ -14,13 +14,13 @@ class Requests {
             },
         });
         return await response.json();
-    }
-    static async post(payload) {
+    },
+    async post(payload) {
         const url = new URL(Requests.base);
         const form = new FormData();
-        Object.entries(payload).forEach(([key, value]) => {
+        for (const [key, value] of Object.entries(payload)) {
             form.append(key, value);
-        });
+        }
         const response = await fetch(url, {
             method: "POST",
             body: form,
@@ -30,7 +30,7 @@ class Requests {
             },
         });
         return await response.json();
-    }
-}
+    },
+};
 
 export default Requests;

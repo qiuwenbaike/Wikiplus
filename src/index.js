@@ -2,6 +2,7 @@
  * Wikiplus
  * Eridanus Sora <sora@sound.moe>
  */
+
 import Page from "./core/page";
 import UI from "./core/ui";
 import Notification from "./core/notification";
@@ -14,10 +15,11 @@ import "./wikiplus.css";
 
 $(async () => {
     const Pages = {};
-    let isCurrentPageEmpty = $(".noarticletext").length > 0 && Constants.articleId === 0;
+    const isCurrentPageEmpty = $(".noarticletext").length > 0 && Constants.articleId === 0;
 
     /**
      * Get page instance.
+     *
      * @param {*} params
      * @param {number} params.revisionId 页面修订版本号
      * @param {string} params.title 页面标题
@@ -41,14 +43,17 @@ $(async () => {
         console.log("Mediawiki JavaScript not loaded or not a Mediawiki website.");
         return;
     }
-    if (!Constants.userGroups.includes("autoconfirmed")) {
+    if (
+        !Constants.userGroups.includes("autoconfirmed") &&
+        !Constants.userGroups.includes("confirmed")
+    ) {
         Notification.error(i18n.translate("not_autoconfirmed_user"));
         Log.info(i18n.translate("not_autoconfirmed_user"));
         return;
     }
 
     if (!Constants.isArticle || Constants.action !== "view") {
-        Log.info(`Not an editable page. Stop initialization.`);
+        Log.info("Not an editable page. Stop initialization.");
         return;
     }
 
@@ -127,7 +132,7 @@ $(async () => {
                     content,
                     config: {
                         summary,
-                        ...(sectionNumber !== -1 ? { section: sectionNumber } : {}),
+                        ...(sectionNumber === -1 ? {} : { section: sectionNumber }),
                         ...(editTags.length ? { tags: editTags.join("|") } : {}),
                     },
                 };
