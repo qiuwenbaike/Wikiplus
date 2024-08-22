@@ -34,7 +34,7 @@
     padding: 20px 10px;
     width: 600px;
     min-height: 100px;
-	border: 1px solid rgba(161, 154, 220, 0.41);
+    border: 1px solid rgba(161, 154, 220, 0.41);
     background-color: #edf9f7;
     user-select: none;
     -webkit-user-select: none;
@@ -47,7 +47,7 @@
     top: -8px;
     margin: 0;
     width: 100%;
-    border-bottom: 1px #6cf solid;
+    border-bottom: 1px solid #6cf;
     text-align: left;
     font-size: 15px;
     line-height: 30px;
@@ -132,13 +132,13 @@
     line-height: 1.5 !important;
 }
 .MoeNotification-notice-success {
-    border-left: 5px #8dda93 solid;
+    border-left: 5px solid #8dda93;
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
     background-color: #008a00;
 }
 .MoeNotification-notice-warning {
-    border-left: 5px #ffdf00 solid;
+    border-left: 5px solid #ffdf00;
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
     background-color: #f4bd00;
@@ -147,7 +147,7 @@
     color: #000;
 }
 .MoeNotification-notice-error {
-    border-left: 5px #e71717 solid;
+    border-left: 5px solid #e71717;
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
     background-color: #b00e06;
