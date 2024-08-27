@@ -92,7 +92,7 @@ class Wiki {
         try {
             const response = await (
                 await fetch(
-                    `${location.protocol}//${location.host}${Constants.scriptPath}/index.php?oldid=${revisionId}&section=${section}&action=raw`
+                    `${location.protocol}//${location.host}${Constants.scriptPath}/index.php?oldid=${revisionId}&section=${section}&action=raw`,
                 )
             ).text();
             return response;
@@ -160,9 +160,9 @@ class Wiki {
                 // Abuse Filter
                 throw new Error(`
                         ${i18n.translate("hit_abusefilter")}:${response.edit.info.replace(
-                    "/Hit AbuseFilter: /ig",
-                    ""
-                )}
+                            "/Hit AbuseFilter: /ig",
+                            "",
+                        )}
                         <br>
                         <div style="font-size: smaller;">${response.edit.warning}</div>
                     `);
