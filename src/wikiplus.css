@@ -39,7 +39,6 @@
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
-    -ms-user-select: none;
 }
 .Wikiplus-InterBox-Header {
     position: relative;
@@ -49,8 +48,8 @@
     width: 100%;
     border-bottom: 1px solid #6cf;
     text-align: left;
-    font-size: 15px;
-    line-height: 30px;
+    font-size: 1.1rem;
+    line-height: 2rem;
     cursor: move;
 }
 .Wikiplus-InterBox-Input {
@@ -76,14 +75,14 @@
     top: 0;
     right: 0;
     margin: 3px 7px;
-    font-size: 20px;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 .Wikiplus-InterBox label {
-    font-size: 13px;
+    font-size: 0.95rem;
 }
 .Wikiplus-InterBox table.diff {
-    table-layout: auto !important;
+    table-layout: auto;
 }
 .Wikiplus-InterBox table.diff .diff-addedline,
 .Wikiplus-InterBox table.diff .diff-deletedline,
@@ -98,9 +97,9 @@
     margin: 5px 0;
 }
 #Wikiplus-Quickedit {
-    word-break: break-all;
     width: 100%;
     min-height: 500px;
+    word-break: break-all;
 }
 .Wikiplus-Banner {
     margin: 0;
@@ -108,8 +107,9 @@
     min-height: 50px;
     background: rgba(193, 222, 214, 0.51);
     text-align: center;
-    font-size: 30px;
-    font-family: "Microsoft YaHei", sans-serif;
+    font-size: 2rem;
+    font-family: "Arial", "Tahoma", "Microsoft YaHei", "Hiragino Sans GB", "Microsoft JhengHei",
+        sans-serif;
 }
 .MoeNotification-notice {
     position: relative;
@@ -119,17 +119,17 @@
     padding: 0 5px;
     width: auto;
     box-shadow: 0 3px 3px #aaa;
-    font-size: 14px !important;
+    font-size: 1rem;
 }
 .MoeNotification-notice span {
     position: relative;
     margin: 3px auto 3px 3px;
     color: #fff;
     text-align: left;
-    font-size: 14px !important;
+    font-size: 1rem;
     font-family: "Arial", "Tahoma", "Microsoft YaHei", "Hiragino Sans GB", "Microsoft JhengHei",
         sans-serif;
-    line-height: 1.5 !important;
+    line-height: 1.5;
 }
 .MoeNotification-notice-success {
     border-left: 5px solid #8dda93;
@@ -160,7 +160,7 @@
     min-width: 20%;
 }
 .mw-editsection-divider {
-    display: inline !important;
+    display: inline;
 }
 .skin-vector #Wikiplus-Quickedit-Summary-Input {
     margin-top: 5px;
