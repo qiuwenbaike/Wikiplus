@@ -103,6 +103,7 @@
     "wikiplus_settings_saved": "设置已保存",
     "redirect_from": "将页面重定向至此",
     "redirect_desc": "请输入要重定向至此的页面名",
+    "redirect_summary_desc": "在下方输入编辑摘要（可选）",
     "empty_input": "输入不能为空",
     "redirect_saved": "重定向完成",
     "uninited": "Wikiplus未加载完毕 请刷新重试",

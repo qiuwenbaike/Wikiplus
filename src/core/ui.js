@@ -157,9 +157,7 @@ class UI {
      * Insert QuickEdit button besides page edit button.
      */
     insertTopQuickEditEntry(onClick) {
-        const topBtn = $("<li>")
-            .attr("id", "Wikiplus-Edit-TopBtn")
-            .attr("class", "mw-list-item");
+        const topBtn = $("<li>").attr("id", "Wikiplus-Edit-TopBtn").attr("class", "mw-list-item");
         const topBtnLink = $("<a>")
             .attr("href", "javascript:void(0)")
             .text(`${i18n.translate("quickedit_topbtn")}`);
@@ -453,7 +451,13 @@ class UI {
      * @param {*}
      */
     showSimpleRedirectPanel({ onEdit = () => {}, onSuccess = () => {} } = {}) {
-        const input = $("<input>").addClass("Wikiplus-InterBox-Input");
+        const input = $("<input>")
+            .addClass("Wikiplus-InterBox-Input")
+            .attr("id", "Wikiplus-SR-Title");
+        const summaryInputTitle = $("<p>").text(i18n.translate("redirect_summary_desc"));
+        const summaryInput = $("<input>")
+            .addClass("Wikiplus-InterBox-Input")
+            .attr("id", "Wikiplus-SR-Summary");
         const applyBtn = $("<div>")
             .addClass("Wikiplus-InterBox-Btn")
             .attr("id", "Wikiplus-SR-Apply")
@@ -468,18 +472,22 @@ class UI {
             .text(i18n.translate("continue"));
         const content = $("<div>")
             .append(input)
+            .append(summaryInputTitle)
+            .append(summaryInput)
             .append($("<hr>"))
             .append(applyBtn)
             .append(cancelBtn); //拼接
         const dialog = this.createDialogBox(i18n.translate("redirect_desc"), content, 600);
         applyBtn.on("click", async () => {
-            const title = $(".Wikiplus-InterBox-Input").val();
+            const title = $("#Wikiplus-SR-Title").val();
+            const summary = $("#Wikiplus-SR-Summary").val();
             $(".Wikiplus-InterBox-Content").html(
                 `<div class="Wikiplus-Banner">${i18n.translate("submitting_edit")}</div>`
             );
             try {
                 await onEdit({
                     title,
+                    summary,
                     forceOverwrite: false,
                 });
                 $(".Wikiplus-Banner").text(i18n.translate("redirect_saved"));
@@ -505,6 +513,7 @@ class UI {
                         try {
                             await onEdit({
                                 title,
+                                summary,
                                 forceOverwrite: true,
                             });
                             $(".Wikiplus-Banner").text(i18n.translate("redirect_saved"));
