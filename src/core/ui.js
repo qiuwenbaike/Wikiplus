@@ -157,9 +157,7 @@ class UI {
      * Insert QuickEdit button besides page edit button.
      */
     insertTopQuickEditEntry(onClick) {
-        const topBtn = $("<li>")
-            .attr("id", "Wikiplus-Edit-TopBtn")
-            .attr("class", "mw-list-item");
+        const topBtn = $("<li>").attr("id", "Wikiplus-Edit-TopBtn").attr("class", "mw-list-item");
         const topBtnLink = $("<a>")
             .attr("href", "javascript:void(0)")
             .text(`${i18n.translate("quickedit_topbtn")}`);
@@ -453,9 +451,13 @@ class UI {
      * @param {*}
      */
     showSimpleRedirectPanel({ onEdit = () => {}, onSuccess = () => {} } = {}) {
-        const input = $("<input>").addClass("Wikiplus-InterBox-Input").attr("id", "Wikiplus-SR-Title");
+        const input = $("<input>")
+            .addClass("Wikiplus-InterBox-Input")
+            .attr("id", "Wikiplus-SR-Title");
         const summaryInputTitle = $("<p>").text(i18n.translate("redirect_summary_desc"));
-        const summaryInput = $("<input>").addClass("Wikiplus-InterBox-Input").attr("id", "Wikiplus-SR-Summary");
+        const summaryInput = $("<input>")
+            .addClass("Wikiplus-InterBox-Input")
+            .attr("id", "Wikiplus-SR-Summary");
         const applyBtn = $("<div>")
             .addClass("Wikiplus-InterBox-Btn")
             .attr("id", "Wikiplus-SR-Apply")
