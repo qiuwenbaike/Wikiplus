@@ -105,6 +105,7 @@
     "wikiplus_settings_saved": "Your settings have been saved",
     "redirect_from": "Redirect from",
     "redirect_desc": "Which page do you want to redirect here?",
+    "redirect_summary_desc": "Type your edit summary below (optional)",
     "empty_input": "Empty input",
     "redirect_saved": "Redirection is finished",
     "uninited": "Wikiplus is not completely initialized, please refeash this page",
