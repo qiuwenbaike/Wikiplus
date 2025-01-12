@@ -96,7 +96,7 @@ class Wiki {
                 rvprop: "content",
                 format: "json",
                 revids: revisionId,
-            }
+            };
             if (revisionId) {
                 params.revids = revisionId;
             }
@@ -108,7 +108,7 @@ class Wiki {
                 if (Object.keys(response.query.pages)[0] === "-1") {
                     // 不存在这一页面
                     // Page not found.
-                    return '';
+                    return "";
                 }
                 const pageInfo =
                     response.query.pages[Object.keys(response.query.pages)[0]].revisions[0];
