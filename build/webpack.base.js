@@ -20,7 +20,7 @@ module.exports = {
                                 {
                                     bugfixes: true,
                                     corejs: {
-                                        version: "3.33",
+                                        version: "3.45",
                                         proposals: true,
                                     },
                                     modules: false,
